@@ -1,0 +1,38 @@
+
+{
+  "Name": "Lynx",
+  "trackergg": "",
+  "color": "#7122E3",
+  "ownerID": "id",
+  "token": "token",
+  "application-id": "id",
+  "auth-url": "url",
+  "footer": "Made by izay21",
+  "channels": [
+    "channel1"
+  ],
+  "prefixes": {
+    "channel1": "$$"
+  },
+  "docsInfo": {
+    "baseDir": "/dir/",
+    "channels": ["aw"],
+    "access": {
+      "channel1": ["aw"]
+    }
+  },
+  "dbConfig": {
+    "host": "ip",
+    "user": "user",
+    "password": "pw",
+    "dbName": "db"
+  },
+  "OPENAI_API_KEY": "key",
+  "DOCS_API_KEY": "key",
+  "DOCS_API_URL": "url",
+  "MINING_API_URL": "url",
+  "MINING_API_KEY": "key",
+  "DAO_API_URL": "url",
+  "DAO_API_KEY": "key",
+  "LORE_API_URL": "url"
+}

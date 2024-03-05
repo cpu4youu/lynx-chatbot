@@ -95,16 +95,16 @@ In March 2023 [Ghubs](https://alienworlds.io/galactic-hubs/) awarded us with a G
 
 ## Document sources 
 
-https://alienworlds.io/alien-worlds-blockchain-technical-blueprint/
-https://alienworlds.io/blogs/tokenized-lore-series-1-trilium-and-triactor-technology/ Published: 02.07.24
-https://alienworlds.io/blogs/tokenized-lore-series-two-the-altans/ Published: 02.08.24
-https://alienworlds.io/blogs/tokenized-lores-series-3-elgem/ Published: 02.09.24
-https://alienworlds.io/blogs/tokenized-lore-series-4-khaureds/ Published: 02.13.24
+- https://alienworlds.io/alien-worlds-blockchain-technical-blueprint/
+- https://alienworlds.io/blogs/tokenized-lore-series-1-trilium-and-triactor-technology/ Published: 02.07.24
+- https://alienworlds.io/blogs/tokenized-lore-series-two-the-altans/ Published: 02.08.24
+- https://alienworlds.io/blogs/tokenized-lores-series-3-elgem/ Published: 02.09.24
+- https://alienworlds.io/blogs/tokenized-lore-series-4-khaureds/ Published: 02.13.24
 
 Possible document additions:
-https://docs.google.com/spreadsheets/d/1BjpZQfG5JWnL5Vv_YMAi3LYytHJSBwhnLDp0Sc2zHCg/edit#gid=0
-https://alienworlds.io/blog/
-https://explorersstation.alienworlds.io/hc/en-us/categories/1500002100341-Welcome-Center
+- https://docs.google.com/spreadsheets/d/1BjpZQfG5JWnL5Vv_YMAi3LYytHJSBwhnLDp0Sc2zHCg/edit#gid=0
+- https://alienworlds.io/blog/
+- https://explorersstation.alienworlds.io/hc/en-us/categories/1500002100341-Welcome-Center
 
 ## Current communities supported
 

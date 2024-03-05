@@ -2,10 +2,9 @@
 
 A Discord bot for Alien Worlds data and lore that brings communities together. 
 
-|![Image1](https://github.com/cpu4youu/lynx-chatbot/screenshots/awdocs.png) | ![Image2](https://github.com/cpu4youu/lynx-chatbot/screenshots/lore.png) |
+|![Image1](https://github.com/cpu4youu/lynx-chatbot/blob/main/screenshots/awdocs.png) | ![Image2](https://github.com/cpu4youu/lynx-chatbot/blob/main/screenshots/lore.png) |
 |:---:|:---:|
-|![Image1](https://github.com/cpu4youu/lynx-chatbot/screenshots/examples.png) | ![Image2](https://github.com/cpu4youu/lynx-chatbot/screenshots/stats.png) |
-
+|![Image1](https://github.com/cpu4youu/lynx-chatbot/blob/main/screenshots/examples.png) | ![Image2](https://github.com/cpu4youu/lynx-chatbot/blob/main/screenshots/stats.png) |
 
 ## Features
 

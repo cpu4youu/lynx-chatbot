@@ -1,0 +1,33 @@
+{
+  "name": "lynx",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "setupdb": "",
+    "start": "node main.js",
+    "lint": "eslint --ext .js .",
+    "lint:fix": "eslint --fix --ext .js .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "eslintIgnore": ["statictexts.js", "file2.js"],
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-google": "^0.14.0"
+  },
+  "dependencies": {
+    "@langchain/community": "^0.0.18",
+    "@langchain/openai": "^0.0.12",
+    "async-mutex": "^0.4.0",
+    "chalk": "^4.1.1",
+    "config": "^3.3.6",
+    "config-reloadable": "^1.0.9",
+    "cron": "^1.8.2",
+    "discord.js": "^12.5.3",
+    "faiss-node": "^0.5.1",
+    "langchain": "^0.1.3",
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1",
+    "pdf-parse": "^1.1.1"
+  }
+}

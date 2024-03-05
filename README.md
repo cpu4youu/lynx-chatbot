@@ -24,7 +24,7 @@ This repo provides a template `Dockerfile` and a structured `default.json` confi
 - docker
 - CUDA docker runtime *(optional, for Nvidia GPU-powered inferencing running locally)*
 
-*Ask your favourite LLM how to install and configure `docker`, `docker-compose`, and the Nvidia CUDA docker runtime for your platform for running a llm locally!*
+*Ask your favourite LLM how to install and configure `docker`, and the Nvidia CUDA docker runtime for your platform for running a llm locally!*
 
 ### Config Arguments
 
@@ -59,7 +59,7 @@ Build the docker container:
 ### Deploy
 Deploy the service(from the project root directory):
 
-`docker run -dt --gpus all --net=host --rm --volume $(pwd):/app --name lynx lynx-chatbot:1.0`
+`docker run -dt --gpus all --net=host --rm --name lynx lynx-chatbot:1.0`
 
 
 ### Remove

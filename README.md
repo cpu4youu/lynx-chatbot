@@ -13,6 +13,9 @@ A Discord bot for Alien Worlds data and lore that brings communities together.
 * Ability to easily add more commands and limit to specific servers
 * Separation of local document data for server specific Q&A from models
 
+## Future Development
+
+Interested to see where this project will go? Checkout what is next on our [Upgrades](https://github.com/cpu4youu/lynx-chatbot/wiki/Upgrades) page!
 
 ## Usage
 

@@ -17,6 +17,10 @@ A Discord bot for Alien Worlds data and lore that brings communities together.
 
 Interested to see where this project will go? Checkout what is next on our [Upgrades](https://github.com/cpu4youu/lynx-chatbot/wiki/Upgrades) page!
 
+## Want Lynx in your Discord server?
+
+Please reach out to us on discord and we can talk about your needs. If your project has already been approved please review [this](https://github.com/cpu4youu/lynx-chatbot/wiki/Want-Lynx-to-answer-questions-about-your-documents-too%3F) and create a MR with the dev branch. 
+
 ## Usage
 
 This repo provides a template `Dockerfile` and a structured `default.json` config file to store the application data. The project officially targets Linux as the deployment platform, however the images will also work on Docker Desktop for Windows.
@@ -35,6 +39,7 @@ This repo provides a template `Dockerfile` and a structured `default.json` confi
 - token: Discord bot auth token, used to login to discord services.
 - application-id: Discord bot id, used to invite bot to servers. 
 - dbConfig: Local database used to store user questions and stats.
+- Once database is created and dbConfig is configured, run createUsersTable() and createQuestionsTable() from the datbase.js file in the tools directory to create the appropriate databse with required attributes that will ensure all functions of this project work.
 - docsInfo: Directory information needed to build local vector database for llm document lookup.
 - docsInfo: access: Used to limit which document data can be retrieved from different discord channels.
 - OPENAI_API_KEY: Open AI key used to request replies from Chat GPT

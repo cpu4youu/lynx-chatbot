@@ -6,22 +6,14 @@
   "scripts": {
     "setupdb": "",
     "start": "node main.js",
-    "lint": "eslint --ext .js .",
-    "lint:fix": "eslint --fix --ext .js .",
+    "lint": "eslint --ext .js . --ignore-pattern node_modules/ --ignore-pattern tools/statictexts.js",
+    "lint:fix": "eslint --fix --ext .js . --ignore-pattern node_modules/ --ignore-pattern tools/statictexts.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "eslintIgnore": ["statictexts.js", "file2.js"],
-  "devDependencies": {
-    "eslint": "^8.57.0",
-    "eslint-config-google": "^0.14.0"
-  },
   "dependencies": {
-    "@langchain/community": "^0.0.18",
-    "@langchain/openai": "^0.0.12",
     "async-mutex": "^0.4.0",
     "chalk": "^4.1.1",
     "config": "^3.3.6",
-    "config-reloadable": "^1.0.9",
     "cron": "^1.8.2",
     "discord.js": "^12.5.3",
     "faiss-node": "^0.5.1",
@@ -29,5 +21,22 @@
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "pdf-parse": "^1.1.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.1.0",
+    "@commitlint/config-conventional": "^19.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-google": "^0.14.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./**/*.{ts,tsx}": "prettier --write"
   }
 }

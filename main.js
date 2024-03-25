@@ -31,7 +31,17 @@ async function _startUp() {
     client.logger = require('./modules/logger.js');
 
     // connect to database
-    await connectToDatabase(con);
+    console.log("before initial con")
+    const dbConnection = await connectToDatabase(con);
+    console.log("after initial con")
+    client.customDBError = {resVal: 0, resMessage: ""}
+    if (dbConnection['resVal'] == -1) {
+      // Add code to message devs after upgrading discord.js package
+      // throw new Error('Database connection failed.');
+      client.customDBError = {resVal: -1, resMessage: "Initial DB connection failed"}
+    } else{
+      client.logger.load('Connected to Database');
+    }
     const docs = await loadDocuments();
 
     // Error Logging
@@ -68,6 +78,7 @@ async function _startUp() {
     });
 
     client.login(config.get('token'));
+
     llmCronjob.start();
   } catch (error) {
     // Ensure that the database connection is closed even if an error occurs

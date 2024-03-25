@@ -31,6 +31,18 @@ module.exports = {
   * @param {Function} con - The database connection startup function.
   */
   async execute(client, message, args, data, que, mutex, docs, con) {
+
+    // customDBError if error state, reply to user saying DB is down and then return
+    if (client.customDBError && client.customDBError["resVal"] == -1){
+      return message.channel.send(`There is an error with the database conneciton. Please try again later!`);
+    }
+    /**
+    * Filter questions based on their age.
+    *
+    * @param {Array<Object>} questions - The array of questions to filter.
+    * @param {number} maxAgeInMilliseconds - The maximum age of questions to include in the result, in milliseconds.
+    * @return {Array<Object>} - The filtered array of questions.
+    */
     function filterQuestionsByAge(questions, maxAgeInMilliseconds) {
       const currentTime = new Date();
 
@@ -43,6 +55,13 @@ module.exports = {
       return filteredQuestions;
     }
 
+    /**
+    * Filter questions based on their discordID.
+    *
+    * @param {Array<Object>} questions - The array of questions to filter.
+    * @param {number} discordId - The discord ID to include in the result.
+    * @return {Array<Object>} - The filtered array of questions.
+    */
     function filterQuestionsById(questions, discordId) {
       // Filter questions based on the age
       const filteredQuestions = questions.filter((question) => {
@@ -55,9 +74,19 @@ module.exports = {
 
     if (config.get('channels').includes(message.channel.id)) {
       try {
-        const user = await getUser(message.author.username, con);
+        const userRes = await getUser(message.author.username, con);
+        if (userRes["resVal"] == -1){
+          client.users.cache.get('tapat1o').send(userRes["resMessage"])
+        }
+        const user = userRes["resMessage"]
         if (user.length == 0) {
-          const last30DayQuestions = await getLast30DayQuestions(con);
+          const fetchLastQuestions = await getLast30DayQuestions(con);
+          if (fetchLastQuestions['resVal'] == -1) {
+            // Add code to message devs after upgrading discord.js package
+            throw new Error(fetchLastQuestions["resMessage"]);
+
+          }
+          const last30DayQuestions = fetchLastQuestions['resMessage'];
           const last24HrQuestions = filterQuestionsByAge(
               last30DayQuestions,
               24 * 60 * 60 * 1000,
@@ -66,7 +95,12 @@ module.exports = {
               last30DayQuestions,
               7 * 24 * 60 * 60 * 1000,
           );
-          const totalQuestions = await getTotalQuestionCount(con);
+          const fetchQuesionts = await getTotalQuestionCount(con);
+          if (fetchQuesionts['resVal'] == -1) {
+            client.users.cache.get('tapat1o').send(fetchQuesionts["resMessage"])
+            client.users.cache.get('izay21').send(fetchQuesionts["resMessage"])
+          }
+          const totalQuestions = fetchQuesionts['resMessage'];
           const answer = `\nUSER STATISTICS:\n\
 - Looks like you haven't asked any questions yet!\n\n \
 COMMUNITY STATISTICS:\n\
@@ -78,7 +112,12 @@ TOTAL QUESTION COUNT: ${totalQuestions}\n \
           return message.reply(answer);
         } else {
           const totalUserQuestions = user[0].totalQueries;
-          const last30DayQuestions = await getLast30DayQuestions(con);
+          const fetchLastQuestions = await getLast30DayQuestions(con);
+          if (fetchLastQuestions['resVal'] == -1) {
+            client.users.cache.get('tapat1o').send(fetchLastQuestions["resMessage"])
+            client.users.cache.get('izay21').send(fetchLastQuestions["resMessage"])
+          }
+          const last30DayQuestions = fetchLastQuestions['resMessage'];
           const last24HrQuestions = filterQuestionsByAge(
               last30DayQuestions,
               24 * 60 * 60 * 1000,
@@ -87,7 +126,12 @@ TOTAL QUESTION COUNT: ${totalQuestions}\n \
               last30DayQuestions,
               7 * 24 * 60 * 60 * 1000,
           );
-          const totalQuestions = await getTotalQuestionCount(con);
+          const fetchQuesionts = await getTotalQuestionCount(con);
+          if (fetchQuesionts['resVal'] == -1) {
+            client.users.cache.get('tapat1o').send(fetchQuesionts["resMessage"])
+            client.users.cache.get('izay21').send(fetchQuesionts["resMessage"])
+          }
+          const totalQuestions = fetchQuesionts['resMessage'];
           const user24HrQuestions = filterQuestionsById(
               last24HrQuestions,
               message.author.username,
@@ -111,11 +155,12 @@ COMMUNITY STATISTICS:\n\
 TOTAL USER QUESTION COUNT: ${totalUserQuestions}\n \
 TOTAL QUESTION COUNT: ${totalQuestions}\n \
 `;
-          return message.reply(answer);
+          message.reply(answer);
+          return;
         }
       } catch (error) {
         console.error(error);
-        return message.channel.send('An error occurred while sending data.');
+        return message.channel.send(`An error occurred while sending data: ${error}`);
       }
     }
   },

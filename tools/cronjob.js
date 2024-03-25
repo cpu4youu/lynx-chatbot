@@ -1,11 +1,13 @@
-const cronJob = require('cron').CronJob;
+const CronJob = require('cron').CronJob;
 
 /**
 * Manages the message queue to execute commands when the corresponding LLM is available
+* @param {Array} llmQueue - The Queue array that holds the messages.
+* @param {Object} mutex - The mutex object.
 * @return {Object} The cronJob object
 */
 async function createLLLMCronjob(llmQueue, mutex) {
-  return new cronJob(
+  return new CronJob(
       '*/5 * * * * *',
       async function() {
         console.log('cronjob attempt');

@@ -41,7 +41,12 @@ async function useMiningApi(question) {
 
   console.log(res);
 
-  return res.output;
+  if (res) {
+    return res.output;
+  } else {
+    return null;
+  }
+
 }
 
 exports.useMiningApi = useMiningApi;

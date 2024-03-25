@@ -8,7 +8,7 @@ module.exports = {
   name: 'awdocs',
   description:
     'get information from the technical blueprint in human readable form',
-  usage: 'docs @message',
+  usage: 'awdocs @message',
   enabled: true,
   aliases: ['d'],
   category: 'langchain',
@@ -47,6 +47,9 @@ module.exports = {
             console.log(question);
 
             const fullAnswer = await useDocs(question, docs[docType]);
+            if (fullAnswer == null) {
+              throw new Error('LLM responded with bad data or failed to load');
+            }
             const answer = fullAnswer.answer;
             const msElapsed = Date.now() - startTime;
             console.log(que);
@@ -105,8 +108,12 @@ module.exports = {
             }
           } catch (error) {
             console.error(error);
+            await mutex.runExclusive(async () => {
+              // Queue 2D-Array order: [[apis], [lore], [docs]]
+              que[2][0].isActive = 3;
+            });
             return message.channel.send(
-                'An error occurred while fetching data.',
+                `An error occurred with the documents LLM: ${error}`,
             );
           }
         }

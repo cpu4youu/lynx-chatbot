@@ -4,10 +4,26 @@ const {
   getUser,
   addUser,
   incrementTotalQueries,
+  connectToDatabase,
+  getLast30DayQuestions,
+  setupConnection
 } = require('../tools/database');
 
-// create a class to hold pertinent info about message
+const {sendError} = require('../tools/errormessage');
+
+/**
+ * Represents a message object.
+ */
 class Message {
+  /**
+   * Create a new Message instance.
+   *
+   * @param {Object} client - The Discord Client object.
+   * @param {Object} message - The Discord message object.
+   * @param {String} args - The arguments passed with the message as a string.
+   * @param {Object} data - Additional data associated with the message.
+   * @param {Function} func - The function to execute when the message is processed.
+   */
   constructor(client, message, args, data, func) {
     this.isActive = 0;
     this.client = client;
@@ -42,8 +58,8 @@ module.exports = async (client, queue, mutex, docs, con, message) => {
     // If the message isn't in a guild return following message
     if (!message.guild) {
       return message.channel.send(
-          'Please use my commands in your guild as they do not work\
-           in direct messages. Using `$$help` in your server to get started.',
+          `Please use my commands in your guild as they do not work\
+           in direct messages. Using '$$help' in your server to get started.`,
       );
     }
 
@@ -78,7 +94,7 @@ module.exports = async (client, queue, mutex, docs, con, message) => {
     // If it isn't a command then return
     if (!cmd) return;
 
-    const llmCommands = new Set(['daoapi', 'awdocs', 'miningapi', 'lore']);
+    const llmCommands = new Set(['daoapi', 'awdocs', 'docs', 'miningapi', 'lore']);
     // Verify channel origin to match corresponding data that channel is authorized to retrieve
 
     // is channel authorized to make command to llm
@@ -93,6 +109,41 @@ module.exports = async (client, queue, mutex, docs, con, message) => {
     const data = {};
     data.config = config;
     data.cmd = cmd;
+
+
+    //check db connection and try to restart if down
+    let error = client.customDBError["resVal"]
+    client.customDBError = {resVal: 0, resMessage: ""}
+    let connCheck = await getLast30DayQuestions(con)
+    console.log("after getlast30 funciton timedout")
+    console.log(connCheck["resVal"])
+    console.log(connCheck["resVal"] == -1)
+    console.log(connCheck["resVal"] === -1)
+    if (connCheck["resVal"] == -1){
+      con = setupConnection()
+      let reconnection = await connectToDatabase(con)
+      console.log(reconnection)
+      if (reconnection["resVal"] == -1){
+        client.customDBError = {resVal: -1, resMessage: "Message DB reconnection failed"}
+        if (error !== connCheck["resVal"]) {
+          await sendError(client, client.customDBError["resMessage"])
+        }
+      } else {
+        if (error !== reconnection["resVal"]) {
+          await sendError(client, "Reconnected to Database")
+        }
+        client.logger.load('Reconnected to Database');
+      }
+    } else {
+      if(error !== connCheck["resVal"]) {
+        client.logger.load('Reconnected to Database');
+        await sendError(client, "Reconnected to Database")
+      }
+    }
+
+
+
+
     // check if it does not require llm:
     if (llmCommands.has(cmd.name) == false) {
       //  forward it on (call helper function)
@@ -100,8 +151,14 @@ module.exports = async (client, queue, mutex, docs, con, message) => {
       executeCommand();
     } else {
       console.log('llm command');
+      //check if db connected
+      if (client.customDBError["resVal"] == 0){
       const discordId = message.author.username;
-      const user = await getUser(discordId, con);
+      const userRes = await getUser(discordId, con);
+        if (userRes == -1){
+          await sendError(client, userRes["resMessage"])
+        }
+        const user = userRes["resMessage"]
       // If user new, add to users table
       if (user.length == 0) {
         const newUser = {
@@ -112,7 +169,10 @@ module.exports = async (client, queue, mutex, docs, con, message) => {
           totalQueries: 0,
           hasBalance: false,
         };
-        addUser(newUser, con);
+        const newUserRes = await addUser(newUser, con);
+        if (newUserRes == -1){
+          await sendError(client, newUserRes["resMessage"])
+        } 
       }
 
       // add new question to questions table
@@ -121,7 +181,7 @@ module.exports = async (client, queue, mutex, docs, con, message) => {
           .toISOString()
           .slice(0, 19)
           .replace('T', ' '); // 'YYYY-MM-DD HH:MM:SS'
-      addQuestion(
+      const addQRes = await addQuestion(
           discordId,
           message.channel.id,
           cmd.name,
@@ -130,8 +190,19 @@ module.exports = async (client, queue, mutex, docs, con, message) => {
           con,
       );
 
+      if (addQRes['resVal'] == -1) {
+        await sendError(client, addQRes["resMessage"])
+      }
+
       // increase user question by 1
-      incrementTotalQueries(discordId, con);
+      const incRes = await incrementTotalQueries(discordId, con);
+      if (incRes == -1){
+        await sendError(client, incRes["resMessage"])
+      }
+    }
+
+
+
 
       console.log('llm command: ', cmd.name);
       // create a new object that holds pertinent data

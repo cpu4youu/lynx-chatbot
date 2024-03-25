@@ -85,7 +85,7 @@ module.exports = {
           } catch (error) {
             console.error(error);
             return message.channel.send(
-                'An error occurred while fetching data.',
+                `An error occurred while fetching data:\n${error}`,
             );
           }
         }

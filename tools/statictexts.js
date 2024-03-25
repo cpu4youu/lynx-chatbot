@@ -7,8 +7,8 @@ const config = require('config');
 */
 function helpText1() {
   return '\nPart 1:\n \
-$$docs \n\tDescription: This command uses AI to read Alien World documents and answer questions about them. For now that only includes info about the Technical Blueprint. The Alien Worlds Technical Blueprint contains detailed information about the fictional universe of Alien Worlds, created by Dacoco in January 2020. It provides background knowledge and descriptions of various alien races, their home planets, physical characteristics, unique abilities, and cultural traits. The document also explains the significance of Trilium, a vital bioreactive substance that plays a crucial role in the survivaland advancement of different species. Additionally, it discusses the formation of the galactic federation, the rise of Megacorps and Syndicates, and the ongoing search for new Trilium sources across the galaxy.\n \
-- Example: $$docs How do the mining pools fill with tlm?\n\n \
+$$awdocs \n\tDescription: This command uses AI to read Alien World documents and answer questions about them. For now that only includes info about the Technical Blueprint. The Alien Worlds Technical Blueprint contains detailed information about the fictional universe of Alien Worlds, created by Dacoco in January 2020. It provides background knowledge and descriptions of various alien races, their home planets, physical characteristics, unique abilities, and cultural traits. The document also explains the significance of Trilium, a vital bioreactive substance that plays a crucial role in the survivaland advancement of different species. Additionally, it discusses the formation of the galactic federation, the rise of Megacorps and Syndicates, and the ongoing search for new Trilium sources across the galaxy.\n \
+- Example: $$awdocs How do the mining pools fill with tlm?\n\n \
 $$daoapi \n\tDescription: This command uses AI to return answers in human readable form related to the Alienworlds DAO API’s. Topics covered include DAC’s, member profiles, custodians by planets, candidates by planet, and voting history from candidates/custodians perspective or from the voter’s perspective. If asking about any of those topics, make sure you pass in any pertinent information needed to make your request.\n \
 - Example: $$daoapi Who are the custodians for the dac naron?\n';
 }
@@ -54,7 +54,7 @@ function examplesText() {
 - Using $$lore How does Trilium work? \n\
 - Using $$lore What are the different Triactor cartridges and their effects? \n\
 - Using $$lore What are the primary races in the Alien Worlds universe? \n\
-- Using $$lore What is the history of the Altans?? \n';
+- Using $$lore What is the history of the Altans? \n';
 }
 
 /**

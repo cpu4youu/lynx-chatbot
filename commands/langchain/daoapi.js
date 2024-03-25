@@ -40,7 +40,7 @@ module.exports = {
             const question = args.join(' ');
             const answer = await useDaoApi(question);
             if (answer == null) {
-              throw 'API responded with bad data or failed to load';
+              throw new Error('API responded with bad data or failed to load');
             }
             console.log('finished getting answer: ');
             console.log(answer);
@@ -60,7 +60,9 @@ module.exports = {
             await mutex.runExclusive(async () => {
               que[0][0].isActive = 3;
             });
-            return message.reply('An error occurred while fetching data.');
+            return message.channel.send(
+              `An error occurred with the API LLM: ${error}`,
+          );
           }
         }
       }

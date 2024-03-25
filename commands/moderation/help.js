@@ -32,7 +32,7 @@ module.exports = {
         return message.reply(helpText2());
       } catch (error) {
         console.error(error);
-        return message.channel.send('An error occurred while sending data.');
+        return message.channel.send(`An error occurred while sending data: ${error}`);
       }
     }
   },

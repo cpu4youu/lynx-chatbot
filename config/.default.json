@@ -34,5 +34,7 @@
   "MINING_API_KEY": "key",
   "DAO_API_URL": "url",
   "DAO_API_KEY": "key",
-  "LORE_API_URL": "url"
+  "LORE_API_URL": "url",
+  "ADMIN_SERVER" : "channel",
+  "ADMIN_ID" : "adminId"
 }
